@@ -1,0 +1,44 @@
+2. What you just created (The Roadmap)
+The Core (The "Manual Map" Engine)
+parser/: Your RvaToOffset logic. It handles reading the DOS, NT, and Section headers from a raw buffer.
+
+relocator/: The "Delta" math. It parses the .reloc section and patches absolute addresses so the DLL can run anywhere in memory.
+
+resolver/: Your EAT Walker. It manually resolves DLL imports (IAT) without using GetProcAddress.
+
+mapper/: The "Orchestrator." This file will #include the parser, relocator, and resolver to actually map the image.
+
+The Techniques (The "Offensive" Lab)
+injection/: Different ways to get your code running (APC, Remote Thread, etc.).
+
+evasion/: This is where you put Halo's Gate and API Hashing. It’s the "Stealth" layer.
+
+persistence/: Methods to stay on the system (Registry keys, WMI).
+
+Common (The "Shared" Metal)
+nt_structs.h: Your own definitions of PEB, LDR_DATA_TABLE_ENTRY, etc. (Bypassing the need for massive Windows headers).
+
+syscall_stubs.asm: Your raw assembly for direct syscalls.
+
+3. The "Elite" .gitignore Configuration
+Since you are on Arch, your compiler will generate a lot of junk. Copy this into your .gitignore immediately:
+
+Bash
+cat <<EOF > .gitignore
+# Build Artifacts
+*.exe
+*.o
+*.obj
+*.pdb
+*.ilk
+*.bin
+out/
+build/
+
+# IDE & Arch Junk
+.vs/
+.vscode/
+.idea/
+*.swp
+*.save
+EOF
